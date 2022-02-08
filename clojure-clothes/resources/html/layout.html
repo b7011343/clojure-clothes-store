@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,36 +7,33 @@
     <title>Clojure Clothes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <!-- Bulma Version 0.9.0
-        <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
-    -->
     {% style """/assets/bulma/css/bulma.min.css" %}
     {% style """/assets/material-icons/css/material-icons.min.css" %}
     {% style """/css/admin.css" %}
+    {% style """/css/app.css" %}
 </head>
-
 <body>
     <nav class="navbar is-white">
-        <div class="container">
-            <div class="navbar-brand">
-                <a class="navbar-item brand-text" href="/">
+        <div class="container is-justify-content-flex-end">
+            <div class="navbar-brand is-align-items-center">
+                <figure class="image is-64x64">
+                    <img src="/img/logo.png" alt="Shop logo" class="logo"/>
+                </figure>
+                <h1 class="navbar-item title is-1">
                     Clojure Clothes
-                </a>
+                </h1>
             </div>
         </div>
     </nav>
     <div class="container">
         <div class="columns">
-            <div class="column is-3 ">
+            <div class="column is-2 ">
                 <aside class="menu is-hidden-mobile">
-                    <ul class="menu-list button">
-                        <li><a href="/" class="{% ifequal page "home.html" %} is-active{%endifequal%}">Home</a></li>
-                    </ul>
                     <p class="menu-label">
                         Customer UI
                     </p>
                     <ul class="menu-list button">
-                        <li><a href="/shop" class="{% ifequal page "store.html" %} is-active{%endifequal%}">Store</a></li>
+                        <li><a href="/shop" class="{% ifequal page "shop.html" %} is-active{%endifequal%}">Shop</a></li>
                    </ul>
                    <p class="menu-label">
                         Admin UI
@@ -47,11 +43,21 @@
                     </ul>
                 </aside>
             </div>
-            <div class="column is-9">
+            <div class="column is-10">
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let cardToggles = document.getElementsByClassName('card-toggle');
+            for (let i = 0; i < cardToggles.length; i++) {
+                cardToggles[i].addEventListener('click', e => {
+                    e.currentTarget.parentElement.parentElement.childNodes[3].classList.toggle('is-hidden');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
