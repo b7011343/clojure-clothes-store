@@ -1,0 +1,1 @@
+web: java -Dclojure.main.report=stderr -cp target/uberjar/clojure-clothes.jar clojure.main -m clojure-clothes.core
