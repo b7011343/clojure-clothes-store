@@ -1,17 +1,13 @@
 (ns clojure-clothes.db.core
-    (:require
-      [monger.core :as mg]
-      [monger.collection :as mc]
-      [monger.operators :refer :all]
-      [mount.core :refer [defstate]]
-      [clojure-clothes.config :refer [env]]))
+  (:require
+   [monger.core :as mg]
+   [monger.collection :as mc]
+   [mount.core :refer [defstate]]
+   [monger.operators :refer :all])
+  (:import org.bson.types.ObjectId))
 
-(defstate db*
-  :start (-> env :database-url mg/connect-via-uri)
-  :stop (-> db* :conn mg/disconnect))
-
-(defstate db
-  :start (:db db*))
+(let [conn (mg/connect)
+      db   (mg/get-db conn "clojure-clothes")]
 
 (defn create-user [user]
   (mc/insert db "users" user))
@@ -24,3 +20,19 @@
 
 (defn get-user [id]
   (mc/find-one-as-map db "users" {:_id id}))
+
+(defn populate-with-products []
+  (mc/insert db "products" {:SKU "ee"
+                            :name "sdf"
+                            :size "sdf"
+                            :colour "sdf"
+                            :quantity 2}))
+
+(defn update-product []
+  (mc/update db "products" {:_id (ObjectId. "620aa2797edd2d2fc42361b5")}
+             {$set {:SKU "EDITED LAD"
+                    :name "sdf"
+                    :size "sdf"
+                    :colour "sdf"
+                    :quantity 2}}))
+)

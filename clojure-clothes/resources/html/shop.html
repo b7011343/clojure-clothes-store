@@ -1,4 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<form action="shop" method="post">
+    {% csrf-field %}
+    <button class="button" type="submit">Submit</button>
+</form>
+
+
 {% endblock %}
