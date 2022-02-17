@@ -18,6 +18,8 @@
   (db/update-product)
   (layout/render request "shop.html"))
 
+(defn products [])
+
 (defn home-routes []
   [""
    {:middleware [middleware/wrap-csrf
@@ -25,4 +27,5 @@
    ["/dashboard" {:get dashboard-page}]
    ["/shop" {:get shop-page
              :post purchase-order}]
+   ["/api/products" {:get products}]
   ])
