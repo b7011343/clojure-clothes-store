@@ -1,0 +1,20 @@
+{
+    "color": {
+        "BL0": "Blue",
+        "BL1": "Black",
+        "RD0": "Red",
+        "GR0": "Green",
+        "WH0": "White"
+    },
+    "size": {
+        "SM0": "Small",
+        "MD0": "Medium",
+        "LG0": "Large",
+        "LG1": "Extra large",
+        "LG2": "Extra Extra Large"
+    },
+    "quality": {
+        "SU": "Supreme",
+        "ST": "Standard"
+    }
+}

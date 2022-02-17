@@ -1,38 +1,41 @@
 (ns clojure-clothes.db.core
-  (:require
-   [monger.core :as mg]
-   [monger.collection :as mc]
-   [mount.core :refer [defstate]]
-   [monger.operators :refer :all])
+  (:require [clojure.data.json]
+            [monger.core :as mg]
+            [monger.collection :as mc]
+            [mount.core :refer [defstate]]
+            [clojure.data.json :as json]
+            [clojure.tools.logging :as log]
+            [monger.operators :refer :all])
   (:import org.bson.types.ObjectId))
 
 (let [conn (mg/connect)
       db   (mg/get-db conn "clojure-clothes")]
+  
+  (defn create-user [user]
+    (mc/insert db "users" user))
 
-(defn create-user [user]
-  (mc/insert db "users" user))
+  (defn update-user [id first-name last-name email]
+    (mc/update db "users" {:_id id}
+               {$set {:first_name first-name
+                      :last_name last-name
+                      :email email}}))
 
-(defn update-user [id first-name last-name email]
-  (mc/update db "users" {:_id id}
-             {$set {:first_name first-name
-                    :last_name last-name
-                    :email email}}))
+  (defn get-user [id]
+    (mc/find-one-as-map db "users" {:_id id}))
 
-(defn get-user [id]
-  (mc/find-one-as-map db "users" {:_id id}))
+  (defn get-products []
+    (mc/find-maps db "products"))
 
-(defn populate-with-products []
-  (mc/insert db "products" {:SKU "ee"
-                            :name "sdf"
-                            :size "sdf"
-                            :colour "sdf"
-                            :quantity 2}))
+  (defn update-product-quantity [id new-quantity]
+    (mc/update db "products" {:_id (ObjectId. id)}
+               {$set {:quantity new-quantity}}))
 
-(defn update-product []
-  (mc/update db "products" {:_id (ObjectId. "620aa2797edd2d2fc42361b5")}
-             {$set {:SKU "EDITED LAD"
-                    :name "sdf"
-                    :size "sdf"
-                    :colour "sdf"
-                    :quantity 2}}))
-)
+  ;; Seeds the db with products from the seed-data.json file if the table doesn't already exist
+  (defn seed-db []
+    (if-not (mc/exists? db "products")
+      (let [seed-data (json/read-str (slurp "resources/seed-data.json") :key-fn keyword)]
+        (log/info "Products table doesn't exit - seeding")
+        (log/info (:products seed-data))
+        (mc/insert-batch db "products" (:products seed-data)))
+      (log/info "Products table already exists - not seeding")))
+  (seed-db))

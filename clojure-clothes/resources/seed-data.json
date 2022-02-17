@@ -1,0 +1,129 @@
+{
+    "products": [
+        {
+            "SKU": "BL0-SM0-SU",
+            "name": "Supreme blue S",
+            "quantity": 56
+        },
+        {
+            "SKU": "BL0-MD0-SU",
+            "name": "Supreme blue M",
+            "quantity": 34
+        },
+        {
+            "SKU": "BL0-LG0-SU",
+            "name": "Supreme blue L",
+            "quantity": 5
+        },
+        {
+            "SKU": "BL0-LG1-SU",
+            "name": "Supreme blue XL",
+            "quantity": 18
+        },
+        {
+            "SKU": "BL0-LG2-SU",
+            "name": "Supreme blue XXL",
+            "quantity": 3
+        },
+        {
+            "SKU": "BL1-SM0-ST",
+            "name": "Standard black S",
+            "quantity": 5
+        },
+        {
+            "SKU": "BL1-MD0-ST",
+            "name": "Standard black M",
+            "quantity": 22
+        },
+        {
+            "SKU": "BL1-LG0-ST",
+            "name": "Standard black L",
+            "quantity": 31
+        },
+        {
+            "SKU": "BL1-LG1-ST",
+            "name": "Standard black XL",
+            "quantity": 11
+        },
+        {
+            "SKU": "BL1-LG2-ST",
+            "name": "Standard black XXL",
+            "quantity": 4
+        },
+        {
+            "SKU": "RD0-SM0-SU",
+            "name": "Supreme red S",
+            "quantity": 2
+        },
+        {
+            "SKU": "RD0-MD0-SU",
+            "name": "Supreme red M",
+            "quantity": 44
+        },
+        {
+            "SKU": "RD0-LG0-SU",
+            "name": "Supreme red L",
+            "quantity": 66
+        },
+        {
+            "SKU": "RD0-LG1-SU",
+            "name": "Supreme red XL",
+            "quantity": 15
+        },
+        {
+            "SKU": "RD0-LG2-SU",
+            "name": "Supreme red XXL",
+            "quantity": 16
+        },
+        {
+            "SKU": "GR0-SM0-ST",
+            "name": "Standard green S",
+            "quantity": 3
+        },
+        {
+            "SKU": "GR0-MD0-ST",
+            "name": "Standard green M",
+            "quantity": 3
+        },
+        {
+            "SKU": "GR0-LG0-ST",
+            "name": "Standard green L",
+            "quantity": 67
+        },
+        {
+            "SKU": "GR0-LG1-ST",
+            "name": "Standard green XL",
+            "quantity": 6
+        },
+        {
+            "SKU": "GR0-LG2-ST",
+            "name": "Standard green XXL",
+            "quantity": 21
+        },
+        {
+            "SKU": "WH0-SM0-SU",
+            "name": "Supreme white S",
+            "quantity": 99
+        },
+        {
+            "SKU": "WH0-MD0-SU",
+            "name": "Supreme white M",
+            "quantity": 6
+        },
+        {
+            "SKU": "WH0-LG0-SU",
+            "name": "Supreme white L",
+            "quantity": 1
+        },
+        {
+            "SKU": "WH0-LG1-SU",
+            "name": "Supreme white XL",
+            "quantity": 5
+        },
+        {
+            "SKU": "WH0-LG2-SU",
+            "name": "Supreme white XXL",
+            "quantity": 77
+        }
+    ]
+}

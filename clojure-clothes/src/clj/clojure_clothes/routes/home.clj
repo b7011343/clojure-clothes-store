@@ -15,10 +15,14 @@
   (layout/render request "shop.html"))
 
 (defn purchase-order [request]
-  (db/update-product)
   (layout/render request "shop.html"))
 
-(defn products [])
+(defn get-products
+  "Returns all products"
+  [request]
+  {:status 200
+   :header {"Content-Type" "application/json"}
+   :body (-> db/get-products)})
 
 (defn home-routes []
   [""
@@ -27,5 +31,5 @@
    ["/dashboard" {:get dashboard-page}]
    ["/shop" {:get shop-page
              :post purchase-order}]
-   ["/api/products" {:get products}]
+   ["/api/products" {:get get-products}]
   ])

@@ -29,6 +29,7 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.9.4"]
                  [ring/ring-defaults "0.3.3"]
+                 [org.clojure/data.json "2.4.0"]
                  [selmer "1.12.45"]]
 
   :min-lein-version "2.0.0"
