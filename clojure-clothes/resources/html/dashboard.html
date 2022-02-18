@@ -52,21 +52,27 @@
                             <th>Name</th>
                             <th>Size</th>
                             <th>Colour</th>
-                            <th>Quantity Available</th>
+                            <th>Quality</th>
+                            <th>Quantity</th>
+                            <th>Price (£)</th>
                         </tr>
                     </thead>
+                    <script>
+                        console.log(products)
+                        </script>
+                    {% for product in products %}
                     <tbody>
                         <tr>
-                            <td>32151</td>
-                            <td>Shirt</td>
-                            <td>XL</td>
-                            <td>Blue</td>
-                            <td>33</td>
+                            <td>{{product.SKU}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.size}}</td>
+                            <td>{{product.color}}</td>
+                            <td>{{product.quality}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>£{{product.price}}</td>
                         </tr>
                     </tbody>
-                    <tfoot>
-            
-                    </tfoot>
+                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -84,10 +90,10 @@
                     <thead>
                         <tr>
                             <th>Order #</th>
-                            <th>Cmr Name</th>
-                            <th>Cmr Address</th>
+                            <th>Customer Name</th>
+                            <th>Customer Address</th>
                             <th>Items</th>
-                            <th>Total Cost £</th>
+                            <th>Total Cost (£)</th>
                         </tr>
                     </thead>
                     <tbody>
