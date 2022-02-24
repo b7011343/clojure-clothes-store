@@ -41,10 +41,7 @@
     (> 0 (- quantity quantity-to-buy))))
 
 (defn get-products-full []
-  (let [products (db/get-products)
-        product-data (vec (map parse-sku products))]
-    (log/info product-data)
-    product-data))
+  (vec (map parse-sku (db/get-products))))
 
 ;; ["", ""]
 (defn create-order [products]
