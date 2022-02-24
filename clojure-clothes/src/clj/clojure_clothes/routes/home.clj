@@ -15,14 +15,20 @@
 (def SUPREME-PRICE 15.99)
 
 ;; Util functions
-(defn parse-sku [sku]
-  (let [split-sku (str/split sku #"-")
+(defn parse-sku [product]
+  (let [sku (get product :SKU)
+        name (get product :name)
+        quantity (get product :quantity)
+        split-sku (str/split sku #"-")
         json-file (json/read-str (slurp "resources/sku-decoder.json") :key-fn keyword)
         quality (get (get json-file :quality) (keyword (get split-sku 2)))
         price (cond
                 (= quality "Supreme") SUPREME-PRICE
                 (= quality "Standard") STANDARD-PRICE)]
-    {:color (get (get json-file :color) (keyword (get split-sku 0)))
+    {:SKU sku
+     :name name
+     :quantity quantity
+     :color (get (get json-file :color) (keyword (get split-sku 0)))
      :size (get (get json-file :size) (keyword (get split-sku 1)))
      :quality quality
      :price price}))
@@ -36,10 +42,8 @@
 
 (defn get-products-full []
   (let [products (db/get-products)
-        sku-data (map parse-sku (map :SKU products))
-        product-data (for [x products
-                           y sku-data]
-                       (merge x y))]
+        product-data (vec (map parse-sku products))]
+    (log/info product-data)
     product-data))
 
 ;; ["", ""]
