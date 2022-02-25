@@ -39,91 +39,48 @@
         </div>
     </nav>
     <div class="columns is-mobile is-multiline is-centered">
+        {% for product in products %}
         <div class="column is-one-third">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Product lkewrewrjwe</p>
+                    <p class="card-header-title"><b>{{product.name}}</b></p>
                 </header>
                 <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                    <figure class="image is-4by3 is-centered">
+                        {% ifequal product.color "Blue" %}
+                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/blue.jpg" alt="Blue t-shirt">
+                        {% endifequal %}
+                        {% ifequal product.color "Black" %}
+                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/black.jpg" alt="Black t-shirt">
+                        {% endifequal %}
+                        {% ifequal product.color "Green" %}
+                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/green.jpg" alt="Green t-shirt">
+                        {% endifequal %}
+                        {% ifequal product.color "Red" %}
+                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/red.jpg" alt="Red t-shirt">
+                        {% endifequal %}
+                        {% ifequal product.color "White" %}
+                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/white.jpg" alt="White t-shirt">
+                        {% endifequal %}
                     </figure>
                 </div>
                 <div class="card-content">
                     <div class="content">
-                          Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+                          <p class="is-size-6 mb-0"><b>Price:</b> £{{product.price}}</p>
+                          <p class="is-size-6 mb-0"><b>SKU:</b> {{product.SKU}}</p>
+                          <p class="is-size-6 mb-0"><b>Colour:</b> {{product.color}}</p>
+                          <p class="is-size-6 mb-0"><b>Size:</b> {{product.size}}</p>
+                          <p class="is-size-6 mb-0"><b>Quality:</b> {{product.quality}}</p>
+                          <p class="is-size-6 mb-0"><b>Quantity in Stock:</b> {{product.quantity}}</p>
                     </div>
                 </div>
                 <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button class="card-footer-item button is-small ml-2">Add to Cart</button>
+                    <input onchange="updateQuantity('{{product.SKU}}', this)" type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
+                    <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}') })" class="card-footer-item button is-small ml-2">Add to Cart</button>
                 </footer>
             </div>
         </div>
-        <div class="column is-one-third">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Product lkewrewrjwe</p>
-                </header>
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                          Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
-                    </div>
-                </div>
-                <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button class="card-footer-item button is-small ml-2">Add to Cart</button>
-                </footer>
-            </div>
-        </div>
-        <div class="column is-one-third">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Product lkewrewrjwe</p>
-                </header>
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                          Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
-                    </div>
-                </div>
-                <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button class="card-footer-item button is-small ml-2">Add to Cart</button>
-                </footer>
-            </div>
-        </div>
-        <div class="column is-one-third">
-            <div class="card">
-                <header class="card-header">
-                    <p class="card-header-title">Product lkewrewrjwe</p>
-                </header>
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="content">
-                          Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
-                    </div>
-                </div>
-                <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button class="card-footer-item button is-small ml-2">Add to Cart</button>
-                </footer>
-            </div>
-        </div>
-        
+        {% endfor %}
     </div>
 </div>
 

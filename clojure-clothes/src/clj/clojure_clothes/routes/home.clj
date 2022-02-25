@@ -74,10 +74,15 @@
    "dashboard.html"
    (merge
     {:products (get-products-full)}
-    (select-keys flash [:SKU :name :quantity :size :color :quality :errors]))))
+    (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
-(defn shop-page [request]
-  (layout/render request "shop.html"))
+(defn shop-page [{:keys [flash] :as request}]
+  (layout/render
+   request
+   "shop.html"
+   (merge
+    {:products (get-products-full)}
+    (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
 ;; Routes
 (defn home-routes []
