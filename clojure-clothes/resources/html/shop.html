@@ -13,29 +13,20 @@
                 <div class="dropdown">
                     <div class="dropdown-trigger">
                       <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
-                        <span>Shopping Cart <b>[Total = £221.30]</b></span>
+                        <span>Shopping Cart <b>[Total = £<span id="cart-total"></span>]</b></span>
                         <span class="icon is-small">
                           <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </span>
                       </button>
                     </div>
-                    <div class="dropdown-menu" id="dropdown-menu2" role="menu">
-                      <div class="dropdown-content">
-                        <div class="dropdown-item">
-                          <p>You can insert <strong>any type of content</strong> within the dropdown menu.</p>
-                        </div>
-                        <hr class="dropdown-divider">
-                        <div class="dropdown-item">
-                          <p>You simply need to use a <code>&lt;div&gt;</code> instead.</p>
-                        </div>
-                        <hr class="dropdown-divider">
-                        <a href="#" class="dropdown-item">
-                          This is a link
-                        </a>
+                    <div class="dropdown-menu" role="menu">
+                      <div class="dropdown-content" id="cart">
                       </div>
                     </div>
                   </div>   
             </div>
+            <button onclick="clearCart()" class="button is-danger level-item">Clear</button>
+            <button class="button is-success level-item">Checkout</button>
         </div>
     </nav>
     <div class="columns is-mobile is-multiline is-centered">
@@ -75,8 +66,8 @@
                     </div>
                 </div>
                 <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input onchange="updateQuantity('{{product.SKU}}', this)" type="text" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}') })" class="card-footer-item button is-small ml-2">Add to Cart</button>
+                    <input onchange="updateQuantity('{{product.SKU}}', this)" type="number" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
+                    <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}'), name: '{{product.name}}' })" class="card-footer-item button is-small ml-2">Add to Cart</button>
                 </footer>
             </div>
         </div>

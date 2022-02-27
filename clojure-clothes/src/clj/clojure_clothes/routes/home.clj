@@ -43,7 +43,6 @@
 (defn get-products-full []
   (vec (map parse-sku (db/get-products))))
 
-;; ["", ""]
 (defn create-order [products]
   (map db/get-product))
 
