@@ -8,40 +8,12 @@
    [clojure.string :as str]
    [clojure.tools.logging :as log]
    [ring.util.http-response :as response]
+   [clojure-clothes.util :as util]
    [clojure-clothes.db.core :as db]))
 
-;; Constants
-(def STANDARD-PRICE 9.99)
-(def SUPREME-PRICE 15.99)
-
-;; Util functions
-(defn parse-sku [product]
-  (let [sku (get product :SKU)
-        name (get product :name)
-        quantity (get product :quantity)
-        split-sku (str/split sku #"-")
-        json-file (json/read-str (slurp "resources/sku-decoder.json") :key-fn keyword)
-        quality (get (get json-file :quality) (keyword (get split-sku 2)))
-        price (cond
-                (= quality "Supreme") SUPREME-PRICE
-                (= quality "Standard") STANDARD-PRICE)]
-    {:SKU sku
-     :name name
-     :quantity quantity
-     :color (get (get json-file :color) (keyword (get split-sku 0)))
-     :size (get (get json-file :size) (keyword (get split-sku 1)))
-     :quality quality
-     :price price}))
-
-(defn calculate-total-price [order]
-  (apply + (map :price order)))
-
-(defn check-stock [product-id quantity-to-buy]
-  (let [quantity (get (db/get-product product-id) :quantity)]
-    (> 0 (- quantity quantity-to-buy))))
-
+;; DB Interaction
 (defn get-products-full []
-  (vec (map parse-sku (db/get-products))))
+  (vec (map util/parse-sku (db/get-products))))
 
 (defn create-order [products]
   (map db/get-product))
@@ -58,10 +30,21 @@
 
 (defn get-product "Returns a product given an id" [{:keys [path-params]}]
   (let [product (db/get-product (get path-params :id))
-        sku-data (parse-sku (get product :SKU))]
+        sku-data (util/parse-sku (get product :SKU))]
     {:status 200
      :header {"Content-Type" "application/json"}
      :body (-> (merge product sku-data))}))
+
+(defn get-orders "Returns all orders" [request]
+  {:status 200
+   :header {"Content-Type" "application/json"}
+   :body (-> nil)})
+
+(defn get-order "Returns an order given an id" [{:keys [path-params]}]
+  (let [order nil]
+    {:status 200
+     :header {"Content-Type" "application/json"}
+     :body (-> nil)}))
 
 ;; Pages
 (defn home-page [request]
@@ -83,6 +66,11 @@
     {:products (get-products-full)}
     (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
+(defn checkout-page [{:keys [flash] :as request}]
+  (layout/render
+   request
+   "checkout.html"))
+
 ;; Routes
 (defn home-routes []
   [""
@@ -92,5 +80,8 @@
    ["/dashboard" {:get dashboard-page}]
    ["/shop" {:get shop-page
              :post purchase-order}]
+   ["/checkout" {:get checkout-page}]
    ["/api/products" {:get get-products}]
-   ["/api/products/:id" {:get get-product}]])
+   ["/api/products/:id" {:get get-product}]
+   ["/api/orders" {:get get-orders}]
+   ["/api/order/:id" {:get get-order}]])
