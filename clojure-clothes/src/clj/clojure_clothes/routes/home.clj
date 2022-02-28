@@ -22,6 +22,8 @@
 (defn purchase-order [request]
   (layout/render request "shop.html"))
 
+(defn checkout [{:keys [params]}])
+
 ;; Rest API
 (defn get-products "Returns all products" [request]
   {:status 200
