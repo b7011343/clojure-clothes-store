@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="level">
                         <span class="tag is-light">${x.sku}</span>
                         <span class="tag is-light">x${x.quantity}</span>
-                        <i onclick="removeProduct('${x.sku}')" class="fa fa-trash button is-small is-danger delete-product" aria-hidden="true"></i>
+                        <button onclick="removeProduct('${x.sku}')" class="delete is-small"></button>
                     </div>
                 </div>
                 ${cartObj.indexOf(x) !== cartObj.length - 1 ? '<hr class="dropdown-divider">' : ''}

@@ -18,11 +18,15 @@
 (defn create-order [products]
   (map db/get-product))
 
-;; Form functions
+;; Form Validation
+
+;; Form Functions
 (defn purchase-order [request]
   (layout/render request "shop.html"))
 
-(defn checkout [{:keys [params]}])
+(defn checkout-form [{:keys [params]}]
+  (log/info params)
+  (response/found "/confirm-order"))
 
 ;; Rest API
 (defn get-products "Returns all products" [request]
@@ -73,6 +77,9 @@
    request
    "checkout.html"))
 
+(defn confirm-order-page [request]
+  (layout/render request "confirm-order.html"))
+
 ;; Routes
 (defn home-routes []
   [""
@@ -82,7 +89,9 @@
    ["/dashboard" {:get dashboard-page}]
    ["/shop" {:get shop-page
              :post purchase-order}]
-   ["/checkout" {:get checkout-page}]
+   ["/checkout" {:get checkout-page
+                 :post checkout-form}]
+   ["/confirm-order" {:get confirm-order-page}]
    ["/api/products" {:get get-products}]
    ["/api/products/:id" {:get get-product}]
    ["/api/orders" {:get get-orders}]

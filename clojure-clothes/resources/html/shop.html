@@ -26,7 +26,7 @@
                   </div>   
             </div>
             <button onclick="clearCart()" class="button is-danger level-item">Clear</button>
-            <button class="button is-success level-item">Checkout</button>
+            <a href="/checkout" class="button is-success level-item">Checkout</a>
         </div>
     </nav>
     <div class="columns is-mobile is-multiline is-centered">
@@ -39,19 +39,19 @@
                 <div class="card-image">
                     <figure class="image is-4by3 is-centered">
                         {% ifequal product.color "Blue" %}
-                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/blue.jpg" alt="Blue t-shirt">
+                        <img src="/img/t-shirts/blue.jpg" alt="Blue t-shirt">
                         {% endifequal %}
                         {% ifequal product.color "Black" %}
-                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/black.jpg" alt="Black t-shirt">
+                        <img src="/img/t-shirts/black.jpg" alt="Black t-shirt">
                         {% endifequal %}
                         {% ifequal product.color "Green" %}
-                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/green.jpg" alt="Green t-shirt">
+                        <img src="/img/t-shirts/green.jpg" alt="Green t-shirt">
                         {% endifequal %}
                         {% ifequal product.color "Red" %}
-                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/red.jpg" alt="Red t-shirt">
+                        <img src="/img/t-shirts/red.jpg" alt="Red t-shirt">
                         {% endifequal %}
                         {% ifequal product.color "White" %}
-                        <img src="https://gateway.pinata.cloud/ipfs/QmRat4CsNgaiPu4VxewdMdwwqpE3Lsf1qP4N6NTBLcYC2D/white.jpg" alt="White t-shirt">
+                        <img src="/img/t-shirts/white.jpg" alt="White t-shirt">
                         {% endifequal %}
                     </figure>
                 </div>
@@ -67,7 +67,7 @@
                 </div>
                 <footer class="card-footer is-flex is-align-items-center p-3">
                     <input onchange="updateQuantity('{{product.SKU}}', this)" type="number" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
-                    <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}'), name: '{{product.name}}' })" class="card-footer-item button is-small ml-2">Add to Cart</button>
+                    <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}'), name: '{{product.name}}', quality: '{{product.quality}}', color: '{{product.color}}', size: '{{product.size}}' })" class="card-footer-item button is-small ml-2">Add to Cart</button>
                 </footer>
             </div>
         </div>

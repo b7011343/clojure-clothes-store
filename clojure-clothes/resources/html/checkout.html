@@ -1,8 +1,95 @@
 {% extends "layout.html" %}
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-accordion@0.2.3/bulma-accordion.min.css">
 
 <div class="container">
-
+    <nav class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <h3 class="is-size-3">Checkout</h2>
+            </div>
+        </div>
+        <div class="level-right">
+            <a href="/shop" class="button is-success level-item">Continue Shopping</a>
+        </div>
+    </nav>
+    <div class="container">
+        <article class="message is-warning" id="empty-warning">
+            <div class="message-header">
+                <p><b>Warning</b></p>
+            </div>
+            <div class="message-body">
+                Your basket is empty, return to the shop page to purchase some t-shirts!
+            </div>
+        </article>
+        <form action="checkout" onsubmit="localStorage.clear();" method="post" style="display: none;" id="checkout-form">
+            {% csrf-field %}
+            <section class="accordions">
+                <article class="accordion is-active is-collapsible">
+                  <div class="accordion-header toggle">
+                    <p>Customise Order</p>
+                    <button class="toggle"></button>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="accordion-content" id="cart">
+                    </div>
+                  </div>
+                </article>
+                <article class="accordion">
+                  <div class="accordion-header toggle">
+                    <p>Confirm Delivery Details and Place Order</p>
+                    <button class="toggle"></button>
+                  </div>
+                  <div class="accordion-body">
+                    <div class="accordion-content">
+                        <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input required name="email" class="input" type="email">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Full Name</label>
+                            <div class="control">
+                                <input required name="fullname" class="input" type="text">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Address Line #1</label>
+                            <div class="control">
+                                <input required name="address1" class="input" type="text">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Address Line #2</label>
+                            <div class="control">
+                                <input class="input" name="address2" type="text">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Post Code</label>
+                            <div class="control">
+                                <input required name="postcode" class="input" type="text">
+                            </div>
+                        </div>
+                        <div class="level">
+                            <div class="level-left">
+                                <div class="container">
+                                    <p>Subtotal: £<span id="subtotal"></span></p>
+                                    <p>Shipping: £0.00</p>
+                                    <p>Total: £<span id="total"></span></p>
+                                </div>
+                            </div>
+                            <div class="level-right">
+                                <button type="submit" class="button is-success">Order</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </article>
+            </section>
+        </form>
+    </div>
 </div>
 
 {% script """/js/checkout.js" %}
