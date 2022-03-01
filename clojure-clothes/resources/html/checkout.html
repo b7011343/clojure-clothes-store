@@ -3,6 +3,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-accordion@0.2.3/bulma-accordion.min.css">
 
 <div class="container">
+    {% if errors.stock %}
+    <span class="">
+        {{errors.stock}}
+    </span>
+    {% endif %}
     <nav class="level">
         <div class="level-left">
             <div class="level-item">

@@ -35,6 +35,9 @@
   (mc/update db "products" {:_id (ObjectId. id)}
              {$set {:quantity new-quantity}}))
 
+(defn get-product-by-sku [sku]
+  (mc/find-one-as-map db "products" {:SKU sku}))
+
 ;; Orders
 (defn create-order [order]
   (mc/insert db "orders" order))

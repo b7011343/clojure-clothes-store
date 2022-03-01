@@ -8,6 +8,9 @@
   (if-let [errors (validate/validate-order params)]
     (-> (response/found "/checkout")
         (assoc :flash (assoc params :errors errors)))
-    ())
-  (log/info params)
-  (response/found "/confirm-order"))
+    (if (validate/validate-order-in-stock params)
+      (do 
+        (log/info "Here")
+        (response/found "/checkout"))
+      (-> (response/found "/checkout") ;; This needs to be modified, as js deletes the cart
+          (assoc :flash (assoc params :errors {:stock "An item does not have the amount of stock you ordered"}))))))

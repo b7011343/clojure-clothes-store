@@ -66,6 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         iTotal += quantity;
     }
-    document.getElementById('subtotal').innerHTML = cartTotal;
-    document.getElementById('total').innerHTML = cartTotal;
+    document.getElementById('subtotal').innerHTML = cartTotal.toFixed(2);
+    document.getElementById('total').innerHTML = cartTotal.toFixed(2);
 });
