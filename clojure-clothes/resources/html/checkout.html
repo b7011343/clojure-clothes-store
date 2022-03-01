@@ -4,9 +4,14 @@
 
 <div class="container">
     {% if errors.stock %}
-    <span class="">
-        {{errors.stock}}
-    </span>
+    <article class="message is-danger mb-2">
+        <div class="message-header">
+            <p>There was a problem...</p>
+        </div>
+        <div class="message-body">
+            {{errors.stock|join}}
+        </div>
+    </article>
     {% endif %}
     <nav class="level">
         <div class="level-left">
@@ -27,7 +32,7 @@
                 Your basket is empty, return to the shop page to purchase some t-shirts!
             </div>
         </article>
-        <form action="checkout" onsubmit="localStorage.clear();" method="post" style="display: none;" id="checkout-form">
+        <form action="checkout" method="post" style="display: none;" id="checkout-form">
             {% csrf-field %}
             <section class="accordions">
                 <article class="accordion is-active is-collapsible">

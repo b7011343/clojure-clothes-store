@@ -25,7 +25,11 @@
 (defn checkout-page [{:keys [flash] :as request}]
   (layout/render
    request
-   "checkout.html"))
+   "checkout.html"
+   (select-keys flash [:errors])))
 
-(defn confirm-order-page [request]
-  (layout/render request "confirm-order.html"))
+(defn confirm-order-page [{:keys [flash] :as request}]
+  (layout/render
+   request
+   "confirm-order.html"
+   (select-keys flash [:ok])))

@@ -8,4 +8,10 @@
     <a href="/shop" class="button is-large is-info">Continue shopping...</a>
 </div>
 
+{% if ok %}
+<script>
+    localStorage.clear();
+</script>
+{% endif %}
+
 {% endblock %}
