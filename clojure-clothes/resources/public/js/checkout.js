@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </label>
                                 <label class="radio">
                                     <div class="level">
-                                        <input type="radio" name="design[${i + iTotal}]">
+                                        <input type="radio" name="design[${i + iTotal}]" value="">
                                         <input class="input is-small ml-2" type="text" name="design[${i + iTotal}]" placeholder="URL to Custom Design">
                                     </div>
                                 </label>
