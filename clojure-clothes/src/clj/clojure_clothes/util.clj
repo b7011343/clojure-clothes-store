@@ -1,6 +1,5 @@
 (ns clojure-clothes.util
   (:require
-   [clojure-clothes.db.core :as db]
    [clojure.string :as str]
    [clojure.data.json :as json]))
 
@@ -29,7 +28,3 @@
 
 (defn calculate-total-price [order]
   (apply + (map :price order)))
-
-(defn check-stock [product-id quantity-to-buy]
-  (let [quantity (get (db/get-product product-id) :quantity)]
-    (> 0 (- quantity quantity-to-buy))))

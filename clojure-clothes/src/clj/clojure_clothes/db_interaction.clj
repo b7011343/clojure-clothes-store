@@ -6,5 +6,6 @@
 (defn get-products-full []
   (vec (map util/parse-sku (db/get-products))))
 
-(defn create-order [products]
-  (map db/get-product))
+(defn check-stock [product-id quantity-to-buy]
+  (let [quantity (get (db/get-product product-id) :quantity)]
+    (> 0 (- quantity quantity-to-buy))))
