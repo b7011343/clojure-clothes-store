@@ -1,7 +1,7 @@
 (ns clojure-clothes.pages
   (:require
    [clojure-clothes.layout :as layout]
-   [clojure-clothes.db-interaction :as dbi]))
+   [clojure-clothes.db-interface :as dbi]))
 
 (defn home-page [request]
   (layout/render request "home.html"))
@@ -32,4 +32,4 @@
   (layout/render
    request
    "confirm-order.html"
-   (select-keys flash [:ok])))
+   (select-keys flash [:ok :oid])))

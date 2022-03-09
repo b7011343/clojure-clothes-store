@@ -31,8 +31,8 @@
 (defn get-product [id]
   (mc/find-one-as-map db "products" {:_id (ObjectId. id)}))
 
-(defn update-product-quantity [id new-quantity]
-  (mc/update db "products" {:_id (ObjectId. id)}
+(defn update-product-quantity [sku new-quantity]
+  (mc/update db "products" {:SKU sku}
              {$set {:quantity new-quantity}}))
 
 (defn get-product-by-sku [sku]
@@ -40,7 +40,7 @@
 
 ;; Orders
 (defn create-order [order]
-  (mc/insert db "orders" order))
+  (mc/insert-and-return db "orders" order))
 
 ;; Seeds the db with products from the seed-data.json file if the table doesn't already exist
 (defn seed-db []

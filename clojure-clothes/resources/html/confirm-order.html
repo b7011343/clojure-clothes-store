@@ -1,16 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="container is-flex is-justify-content-center is-align-items-center pt-5">
+<div class="is-flex-direction-column is-flex is-justify-content-center is-align-items-center pt-5">
     <p class="title is-size-1">Thank you for your order!</p>
+    {% if oid %}
+    <small><b>Order ID: </b>{{oid}}</small>
+    <small><b>Order Status: </b> Processing</small>
+    {% endif %}
 </div>
 <div class="container is-flex is-justify-content-center is-align-items-center mt-5">
-    <a href="/shop" class="button is-large is-info">Continue shopping...</a>
+    <a href="/shop" class="button is-large is-info mr-2 ml-2">Continue shopping...</a>
+    {% if oid %}
+    <a class="button is-large is-success mr-2 ml-2" href="/order-tracker">Track your order</a>
+    {% endif %}
 </div>
 
 {% if ok %}
 <script>
     localStorage.clear();
+</script>
+{% else %}
+<script>
+    window.location.replace("/");
 </script>
 {% endif %}
 

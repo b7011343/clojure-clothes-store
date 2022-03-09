@@ -1,13 +1,10 @@
 (ns clojure-clothes.util
   (:require
+   [clojure.tools.logging :as log]
    [clojure.string :as str]
+   [clojure-clothes.const :as c]
    [clojure.data.json :as json]))
 
-;; Constants
-(def STANDARD-PRICE 9.99)
-(def SUPREME-PRICE 15.99)
-
-;; Util functions
 (defn parse-sku [product]
   (let [sku (get product :SKU)
         name (get product :name)
@@ -16,8 +13,8 @@
         json-file (json/read-str (slurp "resources/sku-decoder.json") :key-fn keyword)
         quality (get (get json-file :quality) (keyword (get split-sku 2)))
         price (cond
-                (= quality "Supreme") SUPREME-PRICE
-                (= quality "Standard") STANDARD-PRICE)]
+                (= quality "Supreme") c/SUPREME-PRICE
+                (= quality "Standard") c/STANDARD-PRICE)]
     {:SKU sku
      :name name
      :quantity quantity
@@ -26,5 +23,27 @@
      :quality quality
      :price price}))
 
-(defn calculate-total-price [order]
-  (apply + (map :price order)))
+(defn get-sku-price [sku]
+  (let [split-sku (str/split sku #"-")
+        json-file (json/read-str (slurp "resources/sku-decoder.json") :key-fn keyword)
+        quality (get (get json-file :quality) (keyword (get split-sku 2)))
+        price (cond
+                (= quality "Supreme") c/SUPREME-PRICE
+                (= quality "Standard") c/STANDARD-PRICE)]
+    price))
+
+(defn parse-order [sku design]
+  (let [sku-sorted (vec (into (sorted-map) sku))
+        design-sorted (vec (into (sorted-map) design))]
+    (for [x (range (count (keys sku)))]
+      {:sku (last (get sku-sorted x)) :design (get (last (get design-sorted x)) 0)})))
+
+(defn sku-filter [sku]
+  (map #(get % :sku) sku))
+
+(defn calculate-total [sku-quantities]
+  (let [mapped-prices (map (fn [[k v]] (* v (get-sku-price k))) sku-quantities)]
+    (apply + mapped-prices)))
+
+;; References
+;; https://stackoverflow.com/a/5724131/7259551

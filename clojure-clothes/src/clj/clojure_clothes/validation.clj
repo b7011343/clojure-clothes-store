@@ -1,7 +1,7 @@
 (ns clojure-clothes.validation
   (:require
    [clojure.tools.logging :as log]
-   [clojure-clothes.db-interaction :as dbi]
+   [clojure-clothes.db-interface :as dbi]
    [struct.core :as stc]))
 
 (def order-schema

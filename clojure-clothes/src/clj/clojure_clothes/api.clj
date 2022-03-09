@@ -1,6 +1,6 @@
 (ns clojure-clothes.api
   (:require
-   [clojure-clothes.db-interaction :as dbi]
+   [clojure-clothes.db-interface :as dbi]
    [clojure-clothes.db.core :as db]
    [clojure-clothes.util :as util]))
 
