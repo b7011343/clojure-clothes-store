@@ -57,8 +57,8 @@
                             <th>Price (£)</th>
                         </tr>
                     </thead>
-                    {% for product in products %}
                     <tbody>
+                        {% for product in products %}
                         <tr>
                             <td>{{product.SKU}}</td>
                             <td>{{product.name}}</td>
@@ -68,8 +68,8 @@
                             <td>{{product.quantity}}</td>
                             <td>£{{product.price}}</td>
                         </tr>
+                        {% endfor %}
                     </tbody>
-                    {% endfor %}
                 </table>
             </div>
         </div>
@@ -96,7 +96,30 @@
                         </tr>
                     </thead>
                     <tbody>
-            
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{order._id}}</td>
+                            <td>{{order.fullname}}</td>
+                            <td>
+                                {{order.address1}}
+                                {{order.address2}}
+                            </td>
+                            <td>
+                                {{ for item in order.order }}
+                                    {{item.sku}} {item.design}
+                                    <br/>
+                                {{ endfor }}
+                            </td>
+                            <td>£{{order.price|double-format:2}}</td>
+                            <td>{{order.status}}</td>
+                            <td>
+                                <form class="is-flex is-justify-content-center" action="dashboard" method="post">
+                                    {% csrf-field %}
+                                    <button class="button is-small is-primary">Package & Deliver</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

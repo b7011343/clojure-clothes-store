@@ -1,6 +1,7 @@
 (ns clojure-clothes.pages
   (:require
    [clojure-clothes.layout :as layout]
+   [clojure-clothes.db.core :as db]
    [clojure-clothes.db-interface :as dbi]))
 
 (defn home-page [request]
@@ -11,7 +12,8 @@
    request
    "dashboard.html"
    (merge
-    {:products (dbi/get-products-full)}
+    {:products (dbi/get-products-full)
+     :orders (db/get-orders)}
     (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
 (defn shop-page [{:keys [flash] :as request}]
@@ -33,3 +35,9 @@
    request
    "confirm-order.html"
    (select-keys flash [:ok :oid])))
+
+(defn order-tracker-page [{:keys [flash] :as request}]
+  (layout/render
+   request
+   "order-tracker.html"
+   (select-keys flash [:order])))

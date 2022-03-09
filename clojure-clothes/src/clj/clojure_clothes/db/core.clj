@@ -42,6 +42,12 @@
 (defn create-order [order]
   (mc/insert-and-return db "orders" order))
 
+(defn get-order [id]
+  (mc/find-one-as-map db "orders" {:_id (ObjectId. id)}))
+
+(defn get-orders []
+  (into [] (mc/find-maps db "orders")))
+
 ;; Seeds the db with products from the seed-data.json file if the table doesn't already exist
 (defn seed-db []
   (if-not (mc/exists? db "products")

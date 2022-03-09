@@ -19,10 +19,10 @@
 (defn get-orders "Returns all orders" [request]
   {:status 200
    :header {"Content-Type" "application/json"}
-   :body (-> nil)})
+   :body (-> (db/get-orders))})
 
 (defn get-order "Returns an order given an id" [{:keys [path-params]}]
-  (let [order nil]
+  (let [order-id (get path-params :id)]
     {:status 200
      :header {"Content-Type" "application/json"}
-     :body (-> nil)}))
+     :body (-> (db/get-order order-id))}))
