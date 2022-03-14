@@ -45,7 +45,7 @@
         </header>
         <div class="card-content is-hidden">
             <div class="content">
-                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <table id="stock-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             <th>SKU</th>
@@ -83,7 +83,7 @@
         </header>
         <div class="card-content is-hidden">
             <div class="content">
-                <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <table id="order-table" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             <th>Order #</th>
@@ -95,20 +95,27 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody class="accordions">
+                    <tbody>
                         {% for order in orders %}
                         <tr>
                             <td>{{order._id}}</td>
                             <td>{{order.fullname}}</td>
                             <td>
                                 {{order.address1}}
+                                <br/>
                                 {{order.address2}}
                             </td>
-                            <td>
-                                {{ for item in order.order }}
-                                    {{item.sku}} {item.design}
-                                    <br/>
-                                {{ endfor }}
+                            <td class="pt-2">
+                                {% for product in order.order %}
+                                <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+                                    <span class="has-text-weight-bold is-italic">{{product.sku}}</span>
+                                    {% ifunequal product.design "" %}
+                                    <a target="_blank" class="button is-small" href="{{product.design}}">Design</a>
+                                    {% else %}
+                                    <button class="button is-small is-danger" disabled>No Design</button>
+                                    {% endifunequal %}
+                                </div>
+                                {% endfor %}
                             </td>
                             <td>£{{order.price|double-format:2}}</td>
                             <td>{{order.status}}</td>
