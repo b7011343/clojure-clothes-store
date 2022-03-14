@@ -93,7 +93,7 @@
                     {% ifequal product.design "" %}
                     <td>N/A</td>
                     {% else %}
-                    <td><a href="{{product.design}}" target="_blank">{{product.design}}</a></td>
+                    <td><a href="{{product.design}}" target="_blank">{{product.design|abbreviate:100}}</a></td>
                     {% endifequal %}
                 </tr>    
                 {% endfor %}

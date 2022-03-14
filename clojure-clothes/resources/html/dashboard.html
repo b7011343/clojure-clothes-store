@@ -101,9 +101,11 @@
                             <td>{{order._id}}</td>
                             <td>{{order.fullname}}</td>
                             <td>
-                                {{order.address1}}
-                                <br/>
-                                {{order.address2}}
+                                {{order.address1}}<br/>
+                                {% if owner.address2%}
+                                {{order.address2}}<br/>
+                                {% endif %}
+                                {{order.postcode}}
                             </td>
                             <td class="pt-2">
                                 {% for product in order.order %}
@@ -122,13 +124,13 @@
                             <td>
                                 {% ifequal order.status "Shipped" %}
                                 <div class="is-flex is-justify-content-center">
-                                    <button disabled type="submit" class="button is-small is-secondary">Package Shipped</button>
+                                    <button title="This order has already been processed and shipped" disabled type="submit" class="button is-small is-secondary">Package Shipped</button>
                                 </div>
                                 {% else %}
                                 <form class="is-flex is-justify-content-center" action="dashboard" method="post">
                                     {% csrf-field %}
                                     <input type="hidden" name="oid" value="{{order._id}}">
-                                    <button  type="submit" class="button is-small is-primary">Package & Deliver</button>
+                                    <button title="Process the order and ship the products" type="submit" class="button is-small is-primary">Package & Deliver</button>
                                 </form>
                                 {% endifequal %}
                             </td>

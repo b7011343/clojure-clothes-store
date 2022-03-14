@@ -17,9 +17,7 @@
       {:status 404
        :header {"Content-Type" "text/plain; charset=UTF-8"}
        :body (str "Product with ObjectId " product-id " not found")}
-      (let [sku (get product :SKU)
-            sku-data (util/parse-sku product)]
-        (log/info sku)
+      (let [sku-data (util/parse-sku product)]
         {:status 200
          :header {"Content-Type" "application/json"}
          :body (-> (merge product sku-data))}))))

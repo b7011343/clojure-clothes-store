@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <img class="image is-64x64" src="/img/designs/yoda.jpg" alt="Yoda design"/>
                                 </label>
                                 <label class="radio">
-                                    <div class="level">
-                                        <input type="radio" name="design[${i + iTotal}]" value="">
-                                        <input class="input is-small ml-2" type="text" name="design[${i + iTotal}]" placeholder="URL to Custom Design">
+                                    <div class="level custom-design">
+                                        <input type="radio" name="design[${i + iTotal}]" id="${i + iTotal}-radio" value="">
+                                        <input class="input is-small ml-2" type="text" onchange="updateValue(this, '${i + iTotal}-radio')" name="design[${i + iTotal}]" placeholder="URL to Custom Design">
                                     </div>
                                 </label>
                             </div>
@@ -69,3 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('subtotal').innerHTML = cartTotal.toFixed(2);
     document.getElementById('total').innerHTML = cartTotal.toFixed(2);
 });
+
+const updateValue = (el, radioId) => {
+    const radio = document.getElementById(radioId);
+    radio.value = el.value;
+    console.log(radio, el.value)
+};
