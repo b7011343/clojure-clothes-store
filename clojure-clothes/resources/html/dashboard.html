@@ -17,19 +17,19 @@
     <div class="tile is-ancestor has-text-centered">
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <p class="title">0</p>
+                <p class="title">{{awaiting-order-count}}</p>
                 <p class="subtitle">Orders Awaiting Processing</p>
             </article>
         </div>
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <p class="title">19</p>
+                <p class="title">{{processed-order-count}}</p>
                 <p class="subtitle">Total Orders Processed</p>
             </article>
         </div>
         <div class="tile is-parent">
             <article class="tile is-child box">
-                <p class="title">£100.02</p>
+                <p class="title">£{{profit|double-format:2}}</p>
                 <p class="subtitle">Profit</p>
             </article>
         </div>
@@ -95,7 +95,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="accordions">
                         {% for order in orders %}
                         <tr>
                             <td>{{order._id}}</td>
@@ -113,10 +113,17 @@
                             <td>£{{order.price|double-format:2}}</td>
                             <td>{{order.status}}</td>
                             <td>
+                                {% ifequal order.status "Shipped" %}
+                                <div class="is-flex is-justify-content-center">
+                                    <button disabled type="submit" class="button is-small is-secondary">Package Shipped</button>
+                                </div>
+                                {% else %}
                                 <form class="is-flex is-justify-content-center" action="dashboard" method="post">
                                     {% csrf-field %}
-                                    <button class="button is-small is-primary">Package & Deliver</button>
+                                    <input type="hidden" name="oid" value="{{order._id}}">
+                                    <button  type="submit" class="button is-small is-primary">Package & Deliver</button>
                                 </form>
+                                {% endifequal %}
                             </td>
                         </tr>
                         {% endfor %}

@@ -47,3 +47,17 @@
                :order products-with-designs}]
     (adjust-stock sku-quantities)
     (db/create-order order)))
+
+(defn get-total-awaiting-orders []
+  (count (db/get-awaiting-orders)))
+
+(defn get-total-processed-orders []
+  (count (db/get-processed-orders)))
+
+(defn get-total-profit []
+  (reduce + (map #(:price %) (db/get-processed-orders))))
+
+
+
+;; References
+;; https://stackoverflow.com/a/48515598/7259551

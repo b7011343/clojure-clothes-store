@@ -26,5 +26,8 @@
   (let [order (db/get-order order-id)]
     (log/info order)))
 
-(defn update-order-status []
-  )
+(defn update-order-status [{:keys [params]}]
+  (let [order-id (get params :oid)]
+    (log/info order-id)
+    (db/process-order order-id)
+    (response/found "/dashboard")))

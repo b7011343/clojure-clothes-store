@@ -5,6 +5,7 @@
             [mount.core :refer [defstate]]
             [clojure.data.json :as json]
             [clojure.tools.logging :as log]
+            [clojure-clothes.const :as c]
             [monger.operators :refer :all])
   (:import org.bson.types.ObjectId))
 
@@ -47,6 +48,16 @@
 
 (defn get-orders []
   (into [] (mc/find-maps db "orders")))
+
+(defn get-awaiting-orders []
+  (mc/find-maps db "orders" {:status c/STATUS_ORDERED}))
+
+(defn get-processed-orders []
+  (mc/find-maps db "orders" {:status c/STATUS_SHIPPED}))
+
+(defn process-order [order-id]
+  (mc/update db "orders" {:_id (ObjectId. order-id)}
+             {$set {:status c/STATUS_SHIPPED}}))
 
 ;; Seeds the db with products from the seed-data.json file if the table doesn't already exist
 (defn seed-db []

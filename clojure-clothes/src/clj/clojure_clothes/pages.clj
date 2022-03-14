@@ -13,7 +13,10 @@
    "dashboard.html"
    (merge
     {:products (dbi/get-products-full)
-     :orders (db/get-orders)}
+     :orders (db/get-orders)
+     :awaiting-order-count (dbi/get-total-awaiting-orders)
+     :processed-order-count (dbi/get-total-processed-orders)
+     :profit (dbi/get-total-profit)}
     (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
 (defn shop-page [{:keys [flash] :as request}]
