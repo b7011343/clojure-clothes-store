@@ -30,5 +30,4 @@
     (= (count sku-not-in-stock) 0)))
 
 (defn validate-order-exists [params]
-  (let [oid (get params :oid)]
-  (not-empty? (db/get-order (get params :oid)))))
+  (not-empty? (db/get-order (get params :oid))))

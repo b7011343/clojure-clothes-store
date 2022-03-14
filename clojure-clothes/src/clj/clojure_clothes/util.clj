@@ -5,7 +5,7 @@
    [clojure-clothes.const :as c]
    [clojure.data.json :as json]))
 
-(defn parse-sku [product]
+(defn  parse-sku [product]
   (let [sku (get product :SKU)
         name (get product :name)
         quantity (get product :quantity)

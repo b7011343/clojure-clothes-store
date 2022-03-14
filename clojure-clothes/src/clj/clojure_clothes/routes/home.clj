@@ -20,6 +20,6 @@
                       :post forms/track-order}]
    ["/confirm-order" {:get pages/confirm-order-page}]
    ["/api/products" {:get api/get-products}]
-   ["/api/products/:id" {:get api/get-product}]
+   ["/api/product/:id" {:get api/get-product}]
    ["/api/orders" {:get api/get-orders}]
    ["/api/order/:id" {:get api/get-order}]])
