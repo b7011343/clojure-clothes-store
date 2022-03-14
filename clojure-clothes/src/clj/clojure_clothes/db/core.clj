@@ -6,6 +6,7 @@
             [clojure.data.json :as json]
             [clojure.tools.logging :as log]
             [clojure-clothes.const :as c]
+            [clojure-clothes.util :as util]
             [monger.operators :refer :all])
   (:import org.bson.types.ObjectId))
 
@@ -30,7 +31,9 @@
   (into [] (mc/find-maps db "products")))
 
 (defn get-product [id]
-  (mc/find-one-as-map db "products" {:_id (ObjectId. id)}))
+  (if (util/valid-id? id)
+    (mc/find-one-as-map db "products" {:_id (ObjectId. id)})
+    nil))
 
 (defn update-product-quantity [sku new-quantity]
   (mc/update db "products" {:SKU sku}
@@ -44,7 +47,9 @@
   (mc/insert-and-return db "orders" order))
 
 (defn get-order [id]
-  (mc/find-one-as-map db "orders" {:_id (ObjectId. id)}))
+  (if (util/valid-id? id)
+      (mc/find-one-as-map db "orders" {:_id (ObjectId. id)})
+      nil))
 
 (defn get-orders []
   (into [] (mc/find-maps db "orders")))

@@ -1,6 +1,105 @@
 {% extends "layout.html" %}
 {% block content %}
 
-
+<div class="container">
+    <h3 class="is-size-3">Order Tracker</h2>
+    <div class="container">
+        <div class="box">
+            <form action="order-tracker" method="post">
+                {% csrf-field %}
+                <div class="field">
+                    <label class="label">Track with Order Number:</label>
+                    <div class="control">
+                        <input name="oid" required class="input" type="text" value="{% if order %}{{order._id}}{% endif %}" placeholder="e.g. 6227f8e17edd2d1c04ff7d6c">
+                    </div>
+                </div>
+                <button type="submit" class="button is-success is-small">Track</button>
+            </form>
+        </div>
+    </div>
+    {% if errors.order %}
+    <article class="message is-danger mt-3">
+        <div class="message-header">
+            <p>There was a problem...</p>
+        </div>
+        <div class="message-body">
+            {{errors.order}}
+        </div>
+    </article>
+    {% endif %}
+    {% if order %}
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Status</td>
+                <td>
+                    {% ifequal order.status "Shipped" %}
+                    <span class="tag is-success">Shipped</span>
+                    {% else %}
+                    <span class="tag is-warning">Processing</span>
+                    {% endifequal %}
+                </td>
+            </tr>
+            <tr>
+                <td>Order #</td>
+                <td>{{order._id}}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{order.fullname}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{order.email}}</td>
+            </tr>
+            <tr>
+                <td>Delivery Address</td>
+                <td>
+                    {{order.address1}}<br/>
+                    {% if order.address2 %}
+                    {{order.address2}}<br/>
+                    {% endif %}
+                    {{order.postcode}}
+                </td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>£{{order.price|double-format:2}}</td>
+            </tr>
+        </tbody>
+        </table>
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Order Items
+                    </th>
+                </tr>
+                <tr>
+                    <th>SKU</th>
+                    <th>Design</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in order.order %}
+                <tr>
+                    <td>{{product.sku}}</td>
+                    {% ifequal product.design "" %}
+                    <td>N/A</td>
+                    {% else %}
+                    <td><a href="{{product.design}}" target="_blank">{{product.design}}</a></td>
+                    {% endifequal %}
+                </tr>    
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
 
 {% endblock %}

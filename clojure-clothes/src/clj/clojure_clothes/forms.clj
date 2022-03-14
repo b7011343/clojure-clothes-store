@@ -22,12 +22,17 @@
         (-> (response/found "/checkout")
             (assoc :flash (assoc params :errors {:stock (concat "The following SKU(s) do not have the required stock: " out-of-stock-skus)})))))))
 
-(defn track-order [order-id]
-  (let [order (db/get-order order-id)]
-    (log/info order)))
+(defn track-order [{:keys [params]}]
+  (let [order-id (get params :oid)]
+    (if (validate/validate-order-exists params)
+      (let [order (db/get-order order-id)]
+        (log/info "order exists")
+        (-> (response/found "order-tracker")
+            (assoc :flash (assoc params :order order))))
+      (-> (response/found "order-tracker")
+          (assoc :flash (assoc params :errors {:order "That order does not exist"}))))))
 
 (defn update-order-status [{:keys [params]}]
   (let [order-id (get params :oid)]
-    (log/info order-id)
     (db/process-order order-id)
     (response/found "/dashboard")))

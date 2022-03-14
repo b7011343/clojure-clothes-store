@@ -43,4 +43,4 @@
   (layout/render
    request
    "order-tracker.html"
-   (select-keys flash [:order])))
+   (select-keys flash [:order :errors])))

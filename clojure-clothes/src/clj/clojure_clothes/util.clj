@@ -45,5 +45,8 @@
   (let [mapped-prices (map (fn [[k v]] (* v (get-sku-price k))) sku-quantities)]
     (apply + mapped-prices)))
 
+(defn valid-id? [id]
+  (= (count id) 24))
+
 ;; References
 ;; https://stackoverflow.com/a/5724131/7259551

@@ -57,7 +57,5 @@
 (defn get-total-profit []
   (reduce + (map #(:price %) (db/get-processed-orders))))
 
-
-
 ;; References
 ;; https://stackoverflow.com/a/48515598/7259551
