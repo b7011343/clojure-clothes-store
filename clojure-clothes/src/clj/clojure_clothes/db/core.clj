@@ -64,6 +64,58 @@
   (mc/update db "orders" {:_id (ObjectId. order-id)}
              {$set {:status c/STATUS_SHIPPED}}))
 
+(defn get-products-full []
+  (vec (map util/parse-sku (get-products))))
+
+(defn in-stock? [sku quantity-to-buy]
+  (let [quantity (get (get-product-by-sku sku) :quantity)]
+    (>= (- quantity quantity-to-buy) 0)))
+
+(defn get-stock [sku]
+  (let [product (get-product-by-sku sku)]
+    (get product :quantity)))
+
+(defn adjust-stock [sku-quantities]
+  (let [keys (vec (keys sku-quantities))]
+    (loop [i 0]
+      (when (< i (count sku-quantities))
+        (let [key (get keys i)
+              order-quantity (get sku-quantities key)
+              current-quantity (get-stock key)
+              new-quantity (- current-quantity order-quantity)]
+          (update-product-quantity key new-quantity)
+          (recur (inc i)))))))
+
+(defn generate-order [params]
+  (let [fullname (get params :fullname)
+        email (get params :email)
+        address1 (get params :address1)
+        address2 (get params :address2)
+        postcode (get params :postcode)
+        products-with-designs (vec (util/parse-order (get params :sku) (get params :design)))
+        sku-list (util/sku-filter products-with-designs)
+        sku-quantities (frequencies sku-list)
+        total-price (util/calculate-total sku-quantities)
+        order {:status c/STATUS_ORDERED
+               :fullname fullname
+               :email email
+               :address1 address1
+               :address2 address2
+               :postcode postcode
+               :price total-price
+               :order products-with-designs}]
+    (adjust-stock sku-quantities)
+    (create-order order)))
+
+(defn get-total-awaiting-orders []
+  (count (get-awaiting-orders)))
+
+(defn get-total-processed-orders []
+  (count (get-processed-orders)))
+
+(defn get-total-profit []
+  (reduce + (map #(:price %) (get-processed-orders))))
+
 ;; Seeds the db with products from the seed-data.json file if the table doesn't already exist
 (defn seed-db []
   (if-not (mc/exists? db "products")
@@ -73,3 +125,6 @@
       (mc/insert-batch db "products" (:products seed-data)))
     (log/info "Products table already exists - not seeding")))
 (seed-db)
+
+;; References
+;; https://stackoverflow.com/a/48515598/7259551

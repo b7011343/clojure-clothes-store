@@ -1,8 +1,7 @@
 (ns clojure-clothes.pages
   (:require
    [clojure-clothes.layout :as layout]
-   [clojure-clothes.db.core :as db]
-   [clojure-clothes.db-interface :as dbi]))
+   [clojure-clothes.db.core :as db]))
 
 (defn home-page [request]
   (layout/render request "home.html"))
@@ -12,11 +11,11 @@
    request
    "dashboard.html"
    (merge
-    {:products (dbi/get-products-full)
+    {:products (db/get-products-full)
      :orders (db/get-orders)
-     :awaiting-order-count (dbi/get-total-awaiting-orders)
-     :processed-order-count (dbi/get-total-processed-orders)
-     :profit (dbi/get-total-profit)}
+     :awaiting-order-count (db/get-total-awaiting-orders)
+     :processed-order-count (db/get-total-processed-orders)
+     :profit (db/get-total-profit)}
     (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
 (defn shop-page [{:keys [flash] :as request}]
@@ -24,7 +23,7 @@
    request
    "shop.html"
    (merge
-    {:products (dbi/get-products-full)}
+    {:products (db/get-products-full)}
     (select-keys flash [:SKU :name :quantity :price :size :color :quality :errors]))))
 
 (defn checkout-page [{:keys [flash] :as request}]

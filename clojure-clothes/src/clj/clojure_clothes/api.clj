@@ -1,6 +1,5 @@
 (ns clojure-clothes.api
   (:require
-   [clojure-clothes.db-interface :as dbi]
    [clojure-clothes.db.core :as db]
    [clojure.tools.logging :as log]
    [clojure-clothes.util :as util]))
@@ -8,7 +7,7 @@
 (defn get-products "Returns all products" [request]
   {:status 200
    :header {"Content-Type" "application/json"}
-   :body (-> (dbi/get-products-full))})
+   :body (-> (db/get-products-full))})
 
 (defn get-product "Returns a product given an id" [{:keys [path-params]}]
   (let [product-id (get path-params :id)
@@ -36,4 +35,4 @@
        :body (str "Order with ObjectId " order-id " not found")}
       {:status 200
        :header {"Content-Type" "application/json"}
-       :body (-> (db/get-order order-id))})))
+       :body (-> order)})))

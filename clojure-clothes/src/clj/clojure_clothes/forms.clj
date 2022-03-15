@@ -4,16 +4,19 @@
    [clojure-clothes.validation :as validate]
    [clojure.string :as str]
    [clojure-clothes.util :as util]
-   [clojure-clothes.db-interface :as dbi]
    [clojure-clothes.db.core :as db]
    [ring.util.http-response :as response]))
 
-(defn checkout-form [{:keys [params]}]
+(defn checkout-form
+  "Validates that the order request is valid and that all the
+   items are in stock, if they are then the order is confirmed,
+   otherwise it returns with an error"
+  [{:keys [params]}]
   (if-let [errors (validate/validate-order params)]
     (-> (response/found "/checkout")
         (assoc :flash (assoc params :errors errors)))
     (if (validate/validate-order-in-stock params)
-      (let [order-id (get (dbi/generate-order params) :_id)]
+      (let [order-id (get (db/generate-order params) :_id)]
         (log/info order-id)
         (-> (response/found "/confirm-order")
             (assoc :flash (assoc params :ok true :oid order-id))))
@@ -22,17 +25,23 @@
         (-> (response/found "/checkout")
             (assoc :flash (assoc params :errors {:stock (concat "The following SKU(s) do not have the required stock: " out-of-stock-skus)})))))))
 
-(defn track-order [{:keys [params]}]
+(defn track-order
+  "Takes an order ID and checks whether the order exists,
+   if it does then the page is reloaded and passed the order
+   data, otherwise it returns with an error"
+  [{:keys [params]}]
   (let [order-id (get params :oid)]
     (if (validate/validate-order-exists params)
       (let [order (db/get-order order-id)]
-        (log/info "order exists")
         (-> (response/found "order-tracker")
             (assoc :flash (assoc params :order order))))
       (-> (response/found "order-tracker")
           (assoc :flash (assoc params :errors {:order "That order does not exist"}))))))
 
-(defn update-order-status [{:keys [params]}]
+(defn update-order-status
+  "Updates an order's status and returns to
+   the /dashboard route"
+  [{:keys [params]}]
   (let [order-id (get params :oid)]
     (db/process-order order-id)
     (response/found "/dashboard")))
