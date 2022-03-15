@@ -73,5 +73,4 @@ document.addEventListener('DOMContentLoaded', () => {
 const updateValue = (el, radioId) => {
     const radio = document.getElementById(radioId);
     radio.value = el.value;
-    console.log(radio, el.value)
 };

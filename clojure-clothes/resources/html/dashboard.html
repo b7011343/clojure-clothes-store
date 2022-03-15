@@ -112,9 +112,9 @@
                                 <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
                                     <span class="has-text-weight-bold is-italic">{{product.sku}}</span>
                                     {% ifunequal product.design "" %}
-                                    <a target="_blank" class="button is-small" href="{{product.design}}">Design</a>
+                                    <a target="_blank" title="Click to view t-shirt design" class="button is-small" href="{{product.design}}">Design</a>
                                     {% else %}
-                                    <button class="button is-small is-danger" disabled>No Design</button>
+                                    <button title="This t-shirt is not customised" class="button is-small is-danger" disabled>No Design</button>
                                     {% endifunequal %}
                                 </div>
                                 {% endfor %}
