@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <footer class="card-footer is-flex is-align-items-center p-3">
-                    <input onchange="updateQuantity('{{product.SKU}}', this)" type="number" class="card-footer-item input is-small is-rounded mr-2" placeholder="Quantity">
+                    <input onchange="updateQuantity('{{product.SKU}}', this)" type="number" class="card-footer-item input is-small mr-2" placeholder="Quantity">
                     <button onclick="addToCart({ sku: '{{product.SKU}}', price: parseFloat('{{product.price}}'), name: '{{product.name}}', quality: '{{product.quality}}', color: '{{product.color}}', size: '{{product.size}}' })" class="card-footer-item button is-small ml-2">Add to Cart</button>
                 </footer>
             </div>
