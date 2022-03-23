@@ -73,17 +73,17 @@
   (mc/update db "orders" {:_id (ObjectId. order-id)}
              {$set {:status c/STATUS_SHIPPED}}))
 
-(defn get-products-full
-  "Returns all products with combined SKU information"
-  []
-  (vec (map util/parse-sku (get-products))))
-
 (defn in-stock?
   "Predicate for if a product of a given SKU have enough
    stock to allow for an order of quantity quantity-to-buy"
   [sku quantity-to-buy]
   (let [quantity (get (get-product-by-sku sku) :quantity)]
     (>= (- quantity quantity-to-buy) 0)))
+
+(defn get-products-full
+  "Returns all products with combined SKU information"
+  []
+  (vec (map util/parse-sku (get-products))))
 
 (defn get-stock
   "Returns the quantity in stock for a product given

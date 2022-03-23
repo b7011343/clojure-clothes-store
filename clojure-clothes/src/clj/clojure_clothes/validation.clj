@@ -1,6 +1,7 @@
 (ns clojure-clothes.validation
   (:require
    [clojure.tools.logging :as log]
+   [clojure-clothes.predicate :as pred]
    [clojure-clothes.util :as util]
    [clojure-clothes.db.core :as db]
    [struct.core :as stc]))
@@ -14,8 +15,6 @@
    :postcode [stc/required stc/string]
    :design [stc/required stc/map]
    :sku [stc/required stc/map]})
-
-(def not-empty? (complement empty?))
 
 (defn validate-order
   "Validates an order request"
@@ -41,4 +40,4 @@
 (defn validate-order-exists
   "Validates that an order exists"
   [params]
-  (not-empty? (db/get-order (get params :oid))))
+  (pred/not-empty? (db/get-order (get params :oid))))

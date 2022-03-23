@@ -11,6 +11,8 @@
    :post [(s/valid? boolean? %)]}
   (= (count id) 24))
 
+(def not-empty? (complement empty?))
+
 (defn product?
   "Predicate for a product"
   [product]
