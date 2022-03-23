@@ -5,6 +5,7 @@
    [clojure-clothes.handler :refer :all]
    [clojure-clothes.middleware.formats :as formats]
    [muuntaja.core :as m]
+   [clojure-clothes.predicate :as pred]
    [clojure-clothes.const :as c]
    [clojure.spec.alpha :as s]
    [clojure.tools.logging :as log]
@@ -20,49 +21,6 @@
     (mount/start #'clojure-clothes.config/env
                  #'clojure-clothes.handler/app-routes)
     (f)))
-
-(defn product?
-  "Predicate for a product"
-  [product]
-  (let [product-keys (keys product)
-        correct-count? (= 8 (count product-keys))]
-    (and correct-count?
-         (some? (:_id product))
-         ((and string? #(= 10 (count %))) (:SKU product))
-         (string? (:name product))
-         (number? (:quantity product))
-         (string? (:color product))
-         (string? (:size product))
-         (string? (:quality product))
-         (float? (:price product)))))
-
-(defn products?
-  "Predicate for a collection of products"
-  [products]
-  (and (coll? products)
-       (every? product? products)))
-
-(defn order?
-  "Predicate for an order"
-  [order]
-  (let [order-keys (keys order)
-        correct-count? (= 9 (count order-keys))]
-    (and correct-count?
-         (some? (:_id order))
-         (string? (:email order))
-         (string? (:fullname order))
-         (string? (:postcode order))
-         (string? (:address1 order))
-         (string? (:address2 order))
-         (and string? (or (= c/STATUS_SHIPPED (:status order)) (= c/STATUS_ORDERED (:status order))))
-         (coll? (:order order))
-         (float? (:price order)))))
-
-(defn orders?
-  "Predicate for a collection of orders"
-  [orders]
-  (and (coll? orders)
-       (every? order? orders)))
 
 (deftest test-app-routes
   (testing "main route"
@@ -98,7 +56,7 @@
     (let [response ((app) (request :get "/api/products"))
           products (parse-json (:body response))]
       (is (= 200 (:status response)))
-      (is (products? products))))
+      (is (pred/products? products))))
 
   (testing "/api/product/:id endpoint"
     (let [valid-product-id (:_id (first (db/get-products)))
@@ -106,7 +64,7 @@
           response ((app) (request :get request-url))
           product (parse-json (:body response))]
       (is (= 200 (:status response)))
-      (is (product? product))))
+      (is (pred/product? product))))
 
   (testing "/api/product/:id endpoint 404"
     (let [response ((app) (request :get "/api/product/invalid-id"))]
@@ -116,7 +74,7 @@
     (let [response ((app) (request :get "/api/orders"))
           orders (parse-json (:body response))]
       (is (= 200 (:status response)))
-      (is (orders? orders))))
+      (is (pred/orders? orders))))
 
   (testing "/api/order/:id endpoint"
     (let [valid-order-id (:_id (first (db/get-orders)))
@@ -124,7 +82,7 @@
           response ((app) (request :get request-url))
           order (parse-json (:body response))]
       (is (= 200 (:status response)))
-      (is (order? order))))
+      (is (pred/order? order))))
 
   (testing "/api/order/:id endpoint 404"
     (let [response ((app) (request :get "/api/order/invalid-id"))]

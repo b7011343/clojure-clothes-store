@@ -4,6 +4,7 @@
             [monger.collection :as mc]
             [mount.core :refer [defstate]]
             [clojure.data.json :as json]
+            [clojure-clothes.predicate :as pred]
             [clojure.tools.logging :as log]
             [clojure-clothes.const :as c]
             [clojure-clothes.util :as util]
@@ -22,7 +23,7 @@
   "Takes an string ID and returns a product map, if
    it doesn't exist it returns nil"
   [id]
-  (if (util/valid-id? id)
+  (if (pred/valid-id? id)
     (mc/find-one-as-map db "products" {:_id (ObjectId. id)})
     nil))
 
@@ -47,7 +48,7 @@
   "Takes an string ID and returns an order map, if
    it doesn't exist it returns nil"
   [id]
-  (if (util/valid-id? id)
+  (if (pred/valid-id? id)
       (mc/find-one-as-map db "orders" {:_id (ObjectId. id)})
       nil))
 

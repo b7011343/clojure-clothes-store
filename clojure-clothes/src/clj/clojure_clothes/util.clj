@@ -105,18 +105,6 @@
   (let [mapped-prices (map (fn [[k v]] (* v (get-sku-price k))) sku-quantities)]
     (apply + mapped-prices)))
 
-;; valid-id? specs
-(s/def ::id-param string?)
-(s/def ::valid-id boolean?)
-
-(defn valid-id?
-  "Takes a string and checks whether it is a valid
-   MongoDb ObjectId"
-  [id]
-  {:pre [(s/valid? ::id-param id)]
-   :post [(s/valid? ::valid-id %)]}
-  (= (count id) 24))
-
 ;; References
 ;; https://stackoverflow.com/a/5724131/7259551
 ;; https://stackoverflow.com/questions/71573257
