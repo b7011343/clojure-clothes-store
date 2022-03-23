@@ -1,7 +1,7 @@
 (defproject clojure-clothes "0.1.0-SNAPSHOT"
 
   :description "A clojure web application for an online t-shirt website"
-  :url "http://example.com/FIXME"
+  :url "https://youtu.be/dQw4w9WgXcQ"
 
   :dependencies [[ch.qos.logback/logback-classic "1.2.7"]
                  [clojure.java-time "0.3.3"]

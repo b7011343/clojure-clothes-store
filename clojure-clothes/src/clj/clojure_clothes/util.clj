@@ -16,7 +16,7 @@
 (s/def ::quality string?)
 (s/def ::price float?)
 (s/def ::product-spec (s/keys :req-un [::_id ::SKU ::name ::quantity]))
-(s/def ::parse-sku-return-spec (s/keys :req-un [::SKU ::name ::quantity ::color ::size ::quality ::price]))
+(s/def ::parse-sku-return-spec (s/keys :req-un [::SKU ::_id ::name ::quantity ::color ::size ::quality ::price]))
 
 (defn parse-sku
   "Takes a product map containing a :SKU value and returns
@@ -26,6 +26,7 @@
    :post [(s/valid? ::parse-sku-return-spec %)]}
   (let [sku (get product :SKU)
         name (get product :name)
+        id (get product :_id)
         quantity (get product :quantity)
         split-sku (str/split sku #"-")
         json-file (json/read-str (slurp "resources/sku-decoder.json") :key-fn keyword)
@@ -34,6 +35,7 @@
                 (= quality "Supreme") c/SUPREME-PRICE
                 (= quality "Standard") c/STANDARD-PRICE)]
     {:SKU sku
+     :_id id
      :name name
      :quantity quantity
      :color (get (get json-file :color) (keyword (get split-sku 0)))
