@@ -6,8 +6,6 @@
    [clojure-clothes.middleware.formats :as formats]
    [muuntaja.core :as m]
    [clojure-clothes.predicate :as pred]
-   [clojure-clothes.const :as c]
-   [clojure.spec.alpha :as s]
    [clojure.tools.logging :as log]
    [clojure-clothes.db.core :as db]
    [mount.core :as mount]))

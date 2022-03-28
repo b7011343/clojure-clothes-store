@@ -6,7 +6,9 @@
    [clojure-clothes.forms :as forms]
    [clojure-clothes.pages :as pages]))
 
-(defn home-routes []
+(defn home-routes
+  "Configures app routes"
+  []
   [""
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
