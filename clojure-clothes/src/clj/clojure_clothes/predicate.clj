@@ -13,6 +13,8 @@
 
 (def not-empty? (complement empty?))
 
+(def not-nil? (complement nil?))
+
 (defn product?
   "Predicate for a product"
   [product]

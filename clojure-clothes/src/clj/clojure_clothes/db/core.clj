@@ -57,6 +57,11 @@
   []
   (into [] (mc/find-maps db "orders")))
 
+(defn delete-order
+  "Takes a string ID and deletes the given order"
+  [id]
+  (mc/remove-by-id db "orders" (ObjectId. id)))
+
 (defn get-awaiting-orders
   "Returns all orders that have not been processed"
   []

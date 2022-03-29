@@ -1,8 +1,6 @@
 (ns clojure-clothes.validation
   (:require
-   [clojure.tools.logging :as log]
    [clojure-clothes.predicate :as pred]
-   [clojure-clothes.util :as util]
    [clojure-clothes.db.core :as db]
    [struct.core :as stc]))
 

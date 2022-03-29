@@ -1,7 +1,6 @@
 (ns clojure-clothes.api
   (:require
    [clojure-clothes.db.core :as db]
-   [clojure.tools.logging :as log]
    [clojure-clothes.util :as util]))
 
 (defn get-products "Returns all products" [request]

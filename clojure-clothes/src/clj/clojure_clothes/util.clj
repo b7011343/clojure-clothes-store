@@ -1,6 +1,5 @@
 (ns clojure-clothes.util
   (:require
-   [clojure.tools.logging :as log]
    [clojure.string :as str]
    [clojure-clothes.const :as c]
    [clojure.spec.alpha :as s]

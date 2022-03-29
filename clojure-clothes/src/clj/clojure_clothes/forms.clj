@@ -1,9 +1,7 @@
 (ns clojure-clothes.forms
   (:require
-   [clojure.tools.logging :as log]
    [clojure-clothes.validation :as validate]
    [clojure.string :as str]
-   [clojure-clothes.util :as util]
    [clojure-clothes.db.core :as db]
    [ring.util.http-response :as response]))
 
