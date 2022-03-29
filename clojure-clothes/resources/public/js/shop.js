@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cart-total').innerHTML = cartTotal.toFixed(2);
 });
 
-// https://stackoverflow.com/questions/25764719/update-if-exists-or-add-new-element-to-array-of-objects-elegant-way-in-javascr
 const appendOrUpdate = (array, element) => {
     const i = array.findIndex(_element => _element.sku === element.sku);
     if (i > -1) array[i] = element;
@@ -79,3 +78,6 @@ dropdown.addEventListener('click', (event) => {
   event.stopPropagation();
   dropdown.classList.toggle('is-active');
 });
+
+// References
+// https://stackoverflow.com/questions/25764719/update-if-exists-or-add-new-element-to-array-of-objects-elegant-way-in-javascr
