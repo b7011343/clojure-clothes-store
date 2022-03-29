@@ -12,12 +12,12 @@
    items are in stock, if they are then the order is confirmed,
    otherwise it returns with an error"
   [{:keys [params]}]
+  (log/info params)
   (if-let [errors (validate/validate-order params)]
     (-> (response/found "/checkout")
         (assoc :flash (assoc params :errors errors)))
     (if (validate/validate-order-in-stock params)
       (let [order-id (get (db/generate-order params) :_id)]
-        (log/info order-id)
         (-> (response/found "/confirm-order")
             (assoc :flash (assoc params :ok true :oid order-id))))
       (let [out-of-stock (validate/get-not-in-stock params)
