@@ -44,7 +44,7 @@
       (db/delete-order order-id)
       (db/update-product-quantity test-sku (+ 1 product-initial-stock))))
   
-  (testing "validate-order-in-exists function"
+  (testing "validate-order-exists function"
     (let [order-id (str (get (db/generate-order generate-order-params) :_id))
           product-initial-stock (db/get-stock test-sku)
           order-exists (validate/validate-order-exists {:oid order-id})]
